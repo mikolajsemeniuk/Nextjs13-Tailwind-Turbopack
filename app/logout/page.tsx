@@ -14,7 +14,7 @@ export default function Page() {
       .then((_) => accountContext.setAccount(null))
       .catch((err) => console.error(err));
     setTimeout(() => router.push("/"), 2000);
-  }, []);
+  }, [router, accountContext]);
 
   return (
     <section className="py-24 flex items-center min-h-screen justify-center bg-white">
