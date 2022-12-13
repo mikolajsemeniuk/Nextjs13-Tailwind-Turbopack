@@ -1,6 +1,37 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
+import AccountContext, { Account } from "../../context/account";
+
+interface Request {
+  email: string;
+  password: string;
+}
 
 export default function Page() {
+  const router = useRouter();
+  const [request, setRequest] = useState<Request>({
+    email: "mike@mock.com",
+    password: "P@ssw0rd",
+  });
+  const accountContext = useContext(AccountContext);
+
+  const login = async () => {
+    await fetch(`http://localhost:5000/account/login`, {
+      method: "POST",
+      body: JSON.stringify(request),
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((response: Account) => {
+        accountContext.setAccount(response);
+        router.push("/");
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className="bg-white dark:bg-gray-900">
       <div className="flex justify-center h-screen">
@@ -46,6 +77,15 @@ export default function Page() {
                     type="email"
                     placeholder="your email"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    onChange={(
+                      event: React.ChangeEvent<HTMLInputElement>
+                    ): void => {
+                      setRequest({
+                        ...request,
+                        email: event.target.value,
+                      });
+                    }}
+                    value={request.email}
                   />
                 </div>
 
@@ -57,11 +97,23 @@ export default function Page() {
                     type="password"
                     placeholder="your password"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    onChange={(
+                      event: React.ChangeEvent<HTMLInputElement>
+                    ): void => {
+                      setRequest({
+                        ...request,
+                        password: event.target.value,
+                      });
+                    }}
+                    value={request.password}
                   />
                 </div>
 
                 <div className="mt-6">
-                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  <button
+                    onClick={() => login()}
+                    className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                  >
                     Sign in
                   </button>
                 </div>

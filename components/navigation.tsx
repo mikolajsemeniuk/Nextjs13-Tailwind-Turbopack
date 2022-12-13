@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { useContext } from "react";
+import AccountContext from "../context/account";
 
 export default function Navigation() {
+  const accountContext = useContext(AccountContext);
+
   return (
     <nav className="fixed z-20 w-full bg-white/90 dark:bg-gray-900/80 backdrop-blur shadow-2xl shadow-gray-600/5 border-b border-gray-100 dark:border-gray-800 peer-checked:navbar-active dark:shadow-none">
       <div className="xl:container m-auto px-6 md:px-12 lg:px-6">
@@ -77,23 +81,43 @@ export default function Navigation() {
             </div>
 
             <div className="w-full space-y-2 border-primary/10 dark:border-gray-700 flex flex-col -ml-1 sm:flex-row lg:space-y-0 md:w-max lg:border-l">
-              <a
-                href="/register"
-                className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
-              >
-                <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
-                  Register
-                </span>
-              </a>
-
-              <Link
-                href="/login"
-                className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
-              >
-                <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
-                  Login
-                </span>
-              </Link>
+              {accountContext.account && (
+                <a className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95">
+                  <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
+                    Welcome {accountContext.account.name}
+                  </span>
+                </a>
+              )}
+              {accountContext.account && (
+                <Link
+                  href="/logout"
+                  className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
+                >
+                  <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
+                    Logout
+                  </span>
+                </Link>
+              )}
+              {!accountContext.account && (
+                <Link
+                  href="/register"
+                  className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
+                >
+                  <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
+                    Register
+                  </span>
+                </Link>
+              )}
+              {!accountContext.account && (
+                <Link
+                  href="/login"
+                  className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
+                >
+                  <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
+                    Login
+                  </span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
