@@ -4,6 +4,7 @@ export interface Account {
   id: number;
   email: string;
   name: string;
+  role: string;
 }
 
 interface State {

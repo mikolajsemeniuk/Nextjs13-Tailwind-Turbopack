@@ -77,6 +77,16 @@ export default function Navigation() {
                     <span>About</span>
                   </Link>
                 </li>
+                {accountContext.account?.role == "admin" && (
+                  <li>
+                    <Link
+                      href="/admin"
+                      className="block md:px-4 transition hover:text-primary dark:hover:text-primaryLight"
+                    >
+                      <span>Admin</span>
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
 
@@ -90,7 +100,7 @@ export default function Navigation() {
               )}
               {accountContext.account && (
                 <Link
-                  href="/logout"
+                  href="/account/logout"
                   className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
                 >
                   <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
@@ -100,7 +110,7 @@ export default function Navigation() {
               )}
               {!accountContext.account && (
                 <Link
-                  href="/register"
+                  href="/account/register"
                   className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
                 >
                   <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
@@ -110,7 +120,7 @@ export default function Navigation() {
               )}
               {!accountContext.account && (
                 <Link
-                  href="/login"
+                  href="/account/login"
                   className="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
                 >
                   <span className="relative text-sm font-semibold text-primary dark:text-primaryLight">
