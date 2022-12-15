@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import AccountContext from "../../context/account";
 
 interface Yacht {
-  id: number;
+  ID: number;
   type: string;
   name: string;
   description: string;
@@ -15,15 +17,38 @@ interface Yacht {
 }
 
 export default function Page() {
+  const accountContext = useContext(AccountContext);
+  const router = useRouter();
   const [yachts, setYachts] = useState<Yacht[]>([]);
   useEffect(() => {
     fetch(`http://localhost:5000/admin/list`, {
       credentials: "include",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 401 || response.status === 403) {
+          throw new Error("unauthorized");
+        }
+
+        return response.json();
+      })
       .then((response) => setYachts(response))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        accountContext.setAccount(null);
+        router.push("/account/unauthorized");
+      });
   }, []);
+
+  // setYachts(yachts.filter((yacht) => yacht.id !== id))
+  const remove = (id: number) => {
+    fetch(`http://localhost:5000/admin/remove/${id}`, {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((_) => {})
+      .catch((err) => {
+        console.log(err.code);
+      });
+  };
 
   return (
     <div className="pt-16 sm:px-6 w-full">
@@ -51,9 +76,9 @@ export default function Page() {
         <div className="mt-7 overflow-x-auto">
           <table className="w-full whitespace-nowrap">
             <tbody>
-              {yachts.map((yacht) => (
+              {yachts.map((yacht, i) => (
                 <tr
-                  key={yacht.id}
+                  key={i}
                   tabIndex={0}
                   className="focus:outline-none h-16 border border-gray-100 rounded"
                 >
@@ -95,14 +120,20 @@ export default function Page() {
                     </div>
                   </td>
                   <td className="pl-12">
-                    <button className="text-sm leading-none text-blue-900 py-3 px-5 bg-blue-300 rounded hover:bg-blue-500 focus:outline-none">
+                    <Link
+                      href={`/admin/${yacht.ID}`}
+                      className="text-sm leading-none text-blue-900 py-3 px-5 bg-blue-300 rounded hover:bg-blue-500 focus:outline-none"
+                    >
                       View
-                    </button>
+                    </Link>
                   </td>
                   <td className="">
-                    <button className="text-sm leading-none text-orange-900 py-3 px-5 bg-orange-300 rounded hover:bg-orange-500 focus:outline-none">
+                    <Link
+                      href={`/admin/update/${yacht.ID}`}
+                      className="text-sm leading-none text-orange-900 py-3 px-5 bg-orange-300 rounded hover:bg-orange-500 focus:outline-none"
+                    >
                       Update
-                    </button>
+                    </Link>
                   </td>
                   <td className="">
                     <button className="text-sm leading-none text-red-900 py-3 px-5 bg-red-300 rounded hover:bg-red-500 focus:outline-none">
