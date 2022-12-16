@@ -12,6 +12,8 @@ export default function Root({ children }: { children: React.ReactNode }) {
     const data = localStorage.getItem("account");
     if (data) {
       setAccount(JSON.parse(data));
+    } else {
+      localStorage.removeItem("account");
     }
   }, []);
 

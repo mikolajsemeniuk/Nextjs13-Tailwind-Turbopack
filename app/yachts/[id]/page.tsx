@@ -1,4 +1,9 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function Page() {
+  const router = useRouter();
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="flex justify-center min-h-screen">
@@ -12,7 +17,7 @@ export default function Page() {
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
           <div className="w-full">
             <h1 className="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
-              Create your restaurant
+              Reserve your yacht
             </h1>
 
             <p className="mt-4 text-gray-500 dark:text-gray-400">
@@ -76,6 +81,25 @@ export default function Page() {
               <hr />
               <p className="cursor-pointer flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                 <span>Create restaurant</span>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 rtl:-scale-x-100"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </p>
+              <p
+                onClick={() => router.back()}
+                className="cursor-pointer flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-500 rounded-md hover:bg-gray-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+              >
+                <span>Go back</span>
 
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
