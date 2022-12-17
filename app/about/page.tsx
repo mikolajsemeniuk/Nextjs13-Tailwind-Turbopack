@@ -6,7 +6,7 @@ export default function Page() {
           <div className="w-full space-y-12 lg:w-1/2 ">
             <div>
               <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
-                explore our <br /> awesome Components
+                explore our <br /> awesome Yachts
               </h1>
 
               <div className="mt-2">
@@ -36,7 +36,7 @@ export default function Page() {
 
               <div className="mt-4 md:mx-4 md:mt-0">
                 <h1 className="text-2xl font-semibold text-gray-700 capitalize dark:text-white">
-                  Copy & paste components
+                  Rent it when you want
                 </h1>
 
                 <p className="mt-3 text-gray-500 dark:text-gray-300">
@@ -67,7 +67,7 @@ export default function Page() {
 
               <div className="mt-4 md:mx-4 md:mt-0">
                 <h1 className="text-2xl font-semibold text-gray-700 capitalize dark:text-white">
-                  Zero Configrations
+                  Zero upfront payment
                 </h1>
 
                 <p className="mt-3 text-gray-500 dark:text-gray-300">
@@ -104,7 +104,7 @@ export default function Page() {
 
               <div className="mt-4 md:mx-4 md:mt-0">
                 <h1 className="text-2xl font-semibold text-gray-700 capitalize dark:text-white">
-                  elegant Dark Mode
+                  Flexible conditions
                 </h1>
 
                 <p className="mt-3 text-gray-500 dark:text-gray-300">
@@ -234,7 +234,7 @@ export default function Page() {
                     type="submit"
                     className="
                         w-full
-                        text-white
+                        text-blue-500
                         bg-primary
                         rounded
                         border border-primary

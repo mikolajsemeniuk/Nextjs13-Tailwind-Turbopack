@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import AccountContext, { Account } from "../../../context/account";
+import MessageContext from "../../../context/message";
 
 interface Request {
   email: string;
@@ -12,6 +13,7 @@ interface Request {
 
 export default function Page() {
   const router = useRouter();
+  const messageContext = useContext(MessageContext);
   const [request, setRequest] = useState<Request>({
     email: "mike@mock.com",
     password: "P@ssw0rd",
@@ -24,12 +26,18 @@ export default function Page() {
       body: JSON.stringify(request),
       credentials: "include",
     })
-      .then((response) => response.json())
+      .then((res) => {
+        if (res.ok) return res.json();
+
+        return res.text().then((text) => {
+          throw new Error(text);
+        });
+      })
       .then((response: Account) => {
         accountContext.setAccount(response);
         router.push("/");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => messageContext.setMessage(err.message));
   };
 
   return (

@@ -176,7 +176,9 @@ export default function Page({ params }: any) {
                   Pay{" "}
                   {yacht.price *
                     Math.round(Math.abs(+request.from - +request.to) / 8.64e7)}
-                  $
+                  $ for{" "}
+                  {Math.round(Math.abs(+request.from - +request.to) / 8.64e7)}{" "}
+                  days
                 </span>
 
                 <svg

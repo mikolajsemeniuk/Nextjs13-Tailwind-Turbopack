@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import AccountContext, { Account } from "../../../context/account";
+import MessageContext from "../../../context/message";
 
 interface Request {
   email: string;
@@ -19,6 +20,7 @@ export default function Page() {
     password: "P@ssw0rd",
   });
   const accountContext = useContext(AccountContext);
+  const messageContext = useContext(MessageContext);
 
   const register = async (req: Request) => {
     await fetch(`http://localhost:5000/account/register`, {
@@ -26,12 +28,18 @@ export default function Page() {
       body: JSON.stringify(req),
       credentials: "include",
     })
-      .then((response) => response.json())
+      .then((res) => {
+        if (res.ok) return res.json();
+
+        return res.text().then((text) => {
+          throw new Error(text);
+        });
+      })
       .then((response: Account) => {
         accountContext.setAccount(response);
         router.push("/");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => messageContext.setMessage(err.message));
   };
 
   return (
