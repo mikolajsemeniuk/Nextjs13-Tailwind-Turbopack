@@ -6,7 +6,18 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        wiggle: {
+          '0%': { transform: 'translateX(50px)', opacity: 0 },
+          '50%': { transform: 'translateX(0px)', opacity: 1 },
+          '100%': { transform: 'translateX(50px)', opacity: 0 },
+        }
+      },
+      animation: {
+        wiggle: 'wiggle 1s ease-in-out normal',
+      }
+    }
   },
   plugins: [],
 }

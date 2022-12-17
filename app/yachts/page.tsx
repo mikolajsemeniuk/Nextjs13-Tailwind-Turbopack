@@ -17,7 +17,7 @@ interface Yacht {
 export default function Page() {
   const [yachts, setYachts] = useState<Yacht[]>([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/admin/list`, {
+    fetch(`http://localhost:5000/yachts`, {
       credentials: "include",
     })
       .then((response) => {

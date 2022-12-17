@@ -2,11 +2,14 @@
 
 import "../styles/output.css";
 import Navigation from "../components/navigation";
+import Notification from "../components/notification";
 import AccountContext, { Account } from "../context/account";
+import MessageContext from "../context/message";
 import { useEffect, useState } from "react";
 
 export default function Root({ children }: { children: React.ReactNode }) {
   const [account, setAccount] = useState<Account | null>(null);
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     const data = localStorage.getItem("account");
@@ -18,25 +21,36 @@ export default function Root({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AccountContext.Provider
+    <MessageContext.Provider
       value={{
-        account: account,
-        setAccount: (account: Account | null) => {
-          if (account) {
-            localStorage.setItem("account", JSON.stringify(account));
-          } else {
-            localStorage.removeItem("account");
-          }
-          setAccount(account);
+        message: message,
+        setMessage: (message: string) => {
+          setMessage(message);
+          setTimeout(() => setMessage(""), 2000);
         },
       }}
     >
-      <html lang="en">
-        <body>
-          <Navigation />
-          {children}
-        </body>
-      </html>
-    </AccountContext.Provider>
+      <AccountContext.Provider
+        value={{
+          account: account,
+          setAccount: (account: Account | null) => {
+            if (account) {
+              localStorage.setItem("account", JSON.stringify(account));
+            } else {
+              localStorage.removeItem("account");
+            }
+            setAccount(account);
+          },
+        }}
+      >
+        <html lang="en">
+          <body>
+            <Notification />
+            <Navigation />
+            {children}
+          </body>
+        </html>
+      </AccountContext.Provider>
+    </MessageContext.Provider>
   );
 }
